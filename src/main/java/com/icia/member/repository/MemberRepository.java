@@ -40,19 +40,3 @@ public class MemberRepository {
         sql.delete("Member.delete", id);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
