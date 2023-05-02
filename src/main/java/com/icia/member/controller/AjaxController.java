@@ -97,5 +97,4 @@ public class AjaxController {
         resultMap.put("memberList", memberDTOList);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
-
 }

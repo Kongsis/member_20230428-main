@@ -14,6 +14,7 @@
     <script src="/resources/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/resources/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 <%@include file="./component/header.jsp"%>
@@ -32,7 +33,7 @@
       </tr>
       <c:forEach items="${memberList}" var="member">
         <tr>
-          <td><a href="/member?id=${member.id}">${member.id}</a></td>
+          <td onclick="member_detail_ajax('${member.id}')"><a href="/member?id=${member.id}">${member.id}</a></td>
           <td>${member.memberEmail}</td>
           <td>${member.memberName}</td>
           <td>${member.memberBirth}</td>
@@ -49,10 +50,36 @@
         </tr>
       </c:forEach>
     </table>
+    <div id="detail-area"></div>
   </div>
 <%@include file="./component/footer.jsp"%>
 </body>
 <script>
+    const member_detail_ajax = (id) => {
+      const resultArea = document.getElementById("detail-area");
+      $.ajax({
+        type: "get",
+        url: "/detail-ajax",
+        data: {
+          "id": id
+        },
+        success: function (res) {
+          let result = "<table>";
+          result += "<tr>";
+          result += "<td>" + res.memberEmail + "</td>";
+          result += "<td>" + res.memberName + "</td>";
+          result += "<td>" + res.memberBirth + "</td>";
+          result += "<td>" + res.memberMobile + "</td>";
+          result += "</tr>";
+          result += "</table>";
+          resultArea.innerHTML = result;
+        },
+        error: function () {
+          alert("일치하는 정보가 없습니다.");
+        }
+      })
+    }
+
     const member_detail = (id) => {
       location.href = "/member?id="+id;
     }

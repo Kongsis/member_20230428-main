@@ -115,4 +115,15 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
+    @GetMapping("/detail-ajax")
+    public ResponseEntity detailAjax(@RequestParam("id") Long id) {
+        System.out.println("id = " + id);
+        MemberDTO memberDTO = memberService.findById(id);
+        if(memberDTO != null) {
+            return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
